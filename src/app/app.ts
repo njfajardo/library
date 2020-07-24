@@ -10,7 +10,7 @@ export default class App extends NlsComponent implements Component {
     print(): TemplateResult {
         const template = html`
             <nls-parent>
-                <p>Esto es un párrafo</p>
+                <p>Esto fue un cambio para el repo</p>
             </nls-parent>
         `
         return template;
