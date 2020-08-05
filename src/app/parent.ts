@@ -6,7 +6,7 @@ import NlsComponent, { selector, Inputs } from '../lib/nls';
 
 @selector('nls-parent')
 export default class Parent extends NlsComponent implements Component {
-    papa: string = 'Nelson'; 
+    papa: string = 'Nelson';
     hola: string = 'Hola, mundo';
     constructor() {
         super();
@@ -23,8 +23,13 @@ export default class Parent extends NlsComponent implements Component {
             <h1>${this.hola}</h1>
             <button @click="${this.alerta}" type="button">Cambiar nombre</button>
             <input type="text"/>
-            <nls-button nombre="${this.papa}"></nls-button>
-            <nls-button></nls-button>
+            ${this.innerChildrens}
+            <nls-button nombre="${this.papa}">
+                <div>
+                    <span>Esto es un texto dentro del botón</span>
+                </div>
+            </nls-button>
+            <nls-button nombre="Otro nombre"></nls-button>
         `
         return template;
     }

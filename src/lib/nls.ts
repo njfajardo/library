@@ -1,4 +1,4 @@
-import { render } from "lit-html";
+import { render, html } from "lit-html";
 
 const PROPERTIES_CLASS = [
     'connectedCallback',
@@ -24,6 +24,7 @@ export default class NlsComponent extends HTMLElement {
     protected initHook() { }
     protected print(): any { }
     static inputs;
+    private childrens: any;
     constructor() {
         super();
     }
@@ -32,17 +33,13 @@ export default class NlsComponent extends HTMLElement {
 
     protected connectedCallback() {
         this.init()
-        // NlsComponent.attr = this.attributes;
-        const self = this;
     }
 
     static get observedAttributes() {
-
         return this.inputs;
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        
         if(newValue !== oldValue && oldValue) {
             this[name] = newValue;
             this.reRenderComponent();
@@ -50,9 +47,12 @@ export default class NlsComponent extends HTMLElement {
     }
     
     protected init(){
+        this.innerChildrens = super.childNodes;
         this.initHook();
         this.createProperties();
-        const tpl = this.print();       
+        const tpl = this.print();  
+        // console.log(super.innerHTML )
+        
         // (this as {
         //     renderRoot: Element|DocumentFragment;
         // }).renderRoot = this.createRenderRoot();
@@ -65,6 +65,24 @@ export default class NlsComponent extends HTMLElement {
 
     protected updateComponent(newValue: any, oldValue: any) {
         this.reRenderComponent()
+    }
+
+    set innerChildrens(nodes: NodeListOf<ChildNode>)  {
+        nodes.forEach(node => {
+            if (!node.childNodes.length) {
+              let parent = node.parentNode;
+              node.parentNode.removeChild(node);
+              if (!parent.children.length) {
+                parent.parentNode.removeChild(parent)
+              }
+            }
+        });
+        if (nodes.length > 1) throw new Error('Todos los elementos hijos del componente deben estar contenidos por un único elemento HTML');
+        this.childrens = nodes[0]
+    }
+
+    get innerChildrens() {
+        return this.childrens;
     }
 
     protected reRenderComponent(){
@@ -90,7 +108,7 @@ export default class NlsComponent extends HTMLElement {
             }
         );
         for (let p of propKeys) {
-            console.log(p)
+
             let prop = this[p];
             Object.defineProperty(this, p, {
                 get: function() { 

@@ -23,6 +23,9 @@ export default class Button extends NlsComponent implements Component {
     }
 
     print(): TemplateResult {
-        return html`<button @click="${this.alerta}" type="button">${this.nombre}</button>`;
+        return html`
+            <button @click="${this.alerta}" type="button">${this.nombre}</button>
+            ${this.innerChildrens}
+        `;
     }
 }
