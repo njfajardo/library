@@ -1,9 +1,11 @@
 {
     "compilerOptions": {
       "rootDir": "src",
-      "outDir": "dist",
+      "outDir": "lib",
       "target": "es2019",
       "strict": false,
+      "declaration": true,
+      "declarationMap": true,
       "experimentalDecorators":true,
       "lib": [
         "es2019",
@@ -12,6 +14,10 @@
       "module": "commonjs",
       "esModuleInterop": true,
       "sourceMap": true
-    }
+    },
+    "include": [
+      "src"
+    ],
+    "exclude": ["node_modules", "dist"]
 }
   

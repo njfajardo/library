@@ -47,7 +47,7 @@ export default class NlsComponent extends HTMLElement {
     }
     
     protected init(){
-        this.innerChildrens = super.childNodes;
+        this.setInnerChildrens(super.childNodes);
         this.initHook();
         this.createProperties();
         const tpl = this.print();  
@@ -67,7 +67,7 @@ export default class NlsComponent extends HTMLElement {
         this.reRenderComponent()
     }
 
-    set innerChildrens(nodes: NodeListOf<ChildNode>)  {
+    setInnerChildrens(nodes: NodeListOf<ChildNode>)  {
         nodes.forEach(node => {
             if (!node.childNodes.length) {
               let parent = node.parentNode;
